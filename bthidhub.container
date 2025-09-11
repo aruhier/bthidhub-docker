@@ -1,0 +1,21 @@
+[Unit]
+Description=A bluetooth hub
+
+[Container]
+Image=ghcr.io/aruhier/bthidhub:latest
+AddCapability=NET_ADMIN
+DropCapability=SYS_CHROOT,SYS_ADMIN
+Network=host
+
+Volume=/etc/bthidhub/bluetooth:/etc/bluetooth
+Volume=/var/lib/bthidhub/bluetooth:/var/lib/bluetooth
+Volume=/etc/bthidhub/config:/config
+
+Environment=BTHIDHUB_PASSWORD="CHANGEME"
+
+[Service]
+TimeoutStartSec=900
+Restart=always
+
+[Install]
+WantedBy=default.target
