@@ -67,9 +67,9 @@ RUN set -ex; \
 WORKDIR /bthidhub
 
 # Needed by mypyc, otherwise crash at runtime due to unknown dt objects.
-RUN set -ex; \
-    \
-    sed -i '8a from dasbus.typing import ObjPath, UInt16' agent.py
+# RUN set -ex; \
+#     \
+#     sed -i '8a from dasbus.typing import ObjPath, UInt16' agent.py
 
 # Runs mypyc in bthidhub to compile the python modules. For testing build, setting it to false will skip this step.
 RUN set -ex; \
@@ -77,8 +77,8 @@ RUN set -ex; \
     python3 -m venv /bthidhub/.venv && \
     . /bthidhub/.venv/bin/activate && /bthidhub/.venv/bin/pip3 install -r /bthidhub/requirements.txt
 
-ARG BUILD_MYPYC=true
-RUN bash -c 'if [ ${BUILD_MYPYC:=true} ]; then cd /bthidhub; . .venv/bin/activate && .venv/bin/mypyc; fi'
+# ARG BUILD_MYPYC=false
+# RUN bash -c 'if [ ${BUILD_MYPYC:=true} ]; then cd /bthidhub; . .venv/bin/activate && .venv/bin/mypyc; fi'
 
 # Cleanup
 RUN set -ex; \
