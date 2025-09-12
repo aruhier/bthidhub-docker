@@ -46,7 +46,7 @@ RUN set -ex; \
     apt-get update && \
     apt-get install -y build-essential dpkg-dev && \
     apt-get install -y \
-        sudo git python3 python3-venv \
+        sudo procps git python3 python3-venv \
         libcairo2-dev libdbus-1-dev libgirepository1.0-dev libglib2.0-dev libudev-dev libical-dev libreadline-dev \
         python3-pip
 
@@ -92,6 +92,8 @@ RUN set -ex; \
     \
     mv /etc/bluetooth /etc/bluetooth.old
 
+# bthidhub uses systemctl interactions, add a dummy script that emulate some services.
+ADD systemctl /usr/bin/systemctl
 ADD entrypoint.sh /entrypoint.sh
 
 VOLUME /etc/bluetooth /var/lib/bluetooth /config

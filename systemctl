@@ -1,0 +1,42 @@
+#!/bin/bash
+
+start_bluetooth() {
+    /usr/libexec/bluetooth/bluetoothd -n -p time,input,hog,autopair,policy,scanparam,deviceinfo &
+    disown
+}
+
+stop_bluetooth() {
+    pkill bluetoothd
+}
+
+case "$1" in
+    start)
+        if [[ $2 == bluetooth* ]]; then
+            start_bluetooth
+        else
+            echo "Unknown service $2"
+            exit 1
+        fi
+        ;;
+    stop)
+        if [[ $2 == bluetooth* ]]; then
+            stop_bluetooth
+        else
+            echo "Unknown service $2"
+            exit 1
+        fi
+        ;;
+    restart)
+        if [[ $2 == bluetooth* ]]; then
+            stop_bluetooth
+            start_bluetooth
+        else
+            echo "Unknown service $2"
+            exit 1
+        fi
+        ;;
+    *)
+        echo "Usage: $0 {start|stop|restart|status}"
+        exit 1
+        ;;
+esac

@@ -24,7 +24,8 @@ fi
 ln -s /config/devices_config.json /bthidhub/devices_config.json
 
 /usr/bin/dbus-daemon --system --nopidfile
-/usr/libexec/bluetooth/bluetoothd -p time,input,hog,autopair,policy,scanparam,deviceinfo &
+sleep 5
+systemctl start bluetooth
 
 cd /bthidhub
 export PATH="/bthidhub/.venv/bin:$PATH"
